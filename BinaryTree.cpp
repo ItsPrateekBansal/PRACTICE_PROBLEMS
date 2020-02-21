@@ -37,6 +37,20 @@ bool isNodePresent(binarytree<int>* root, int x) {
 }
 //function to find if a particular element is present in the given binary tree or not
 //ENDS
+
+//function to mirror the given binary tree
+//STARTS
+void mirrorBinaryTree(binarytree<int>* root) {
+    if(root == NULL)
+        return;
+    binarytree<int>* temp = root->right;
+    root->right = root->left;
+    root->left = temp;
+    mirrorBinaryTree(root->left);
+    mirrorBinaryTree(root->right);
+}
+//ENDS
+//function to mirror the given binary tree
 void printtree(binarytree<int>* root)
 {   
     if(root == NULL)
