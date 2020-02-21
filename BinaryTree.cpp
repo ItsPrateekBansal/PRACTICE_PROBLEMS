@@ -23,6 +23,20 @@ class binarytree
         delete right;
     }
 };
+//function to find if a particular element is present in the given binary tree or not
+//STARTS
+bool isNodePresent(binarytree<int>* root, int x) {
+    if(root == NULL)
+        return false;
+    if(root->data == x)
+        return true;
+    bool ans = isNodePresent(root->left,x);
+    bool ans2= isNodePresent(root->right,x);
+    return (ans||ans2);
+
+}
+//function to find if a particular element is present in the given binary tree or not
+//ENDS
 void printtree(binarytree<int>* root)
 {   
     if(root == NULL)
