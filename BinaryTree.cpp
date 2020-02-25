@@ -129,6 +129,40 @@ binarytree<int>* takeinputlevelwise()
     }
     return root;
 }
+//FUNCTION TO PRINT THE GIVEN BINARY TREE IN A ZIG ZAG ORDER
+//STARTS HERE
+#include<stack>
+void zigZagOrder(BinaryTreeNode<int> *root)
+{
+    stack<BinaryTreeNode<int>*> s1,s2;
+    s1.push(root);
+    while(s1.size() != 0 || s2.size() != 0)
+    {
+        while(s1.size() != 0)
+        {
+            cout<<s1.top()->data<<" ";
+            if(s1.top()->left)
+            s2.push(s1.top()->left);
+            if(s1.top()->right)
+            s2.push(s1.top()->right);
+            s1.pop();
+        }
+        cout<<endl;
+        while(s2.size() != 0)
+        {
+            cout<<s2.top()->data<<" ";
+            if(s2.top()->right)
+            s1.push(s2.top()->right);
+            if(s2.top()->left)
+            s1.push(s2.top()->left);
+            s2.pop();
+            
+        }
+        cout<<endl;
+    }
+}
+//FUNCTION TO PRINT THE GIVEN BINARY TREE IN A ZIG ZAG ORDER
+//STARTS HERE
 int main()
 {
     binarytree<int>* root = takeinputlevelwise();
