@@ -23,6 +23,26 @@ class binarytree
         delete right;
     }
 };
+//Function to find the LCA 
+//STARTS
+int lcaBinaryTree(BinaryTreeNode <int>* root , int val1, int val2){
+    if(root == NULL)
+        return -1;
+    if(root->data == val1 || root->data == val2)
+        return root->data;
+    int a = lcaBinaryTree(root->left,val1,val2);
+    int b = lcaBinaryTree(root->right,val1,val2);
+    if(a!=-1 && b==-1)
+        return a;
+    else if(a==-1 && b!=-1)
+        return b;
+    else if(a==-1 && b==-1)
+        return -1;
+    else
+        return root->data;
+}
+//Function to find the LCA 
+//ENDS
 //function to find if a particular element is present in the given binary tree or not
 //STARTS
 bool isNodePresent(binarytree<int>* root, int x) {
