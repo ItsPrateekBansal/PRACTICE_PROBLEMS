@@ -58,6 +58,33 @@ int getBucketIndex(string key)                      //HERE WE CREATE OUR OWN HAS
 
 	return hashCode % numBuckets;     //compression function
 }
+void rehash()                        //private function for rehashing 
+{
+    mapnode<V>** temp = buckets;
+    buckets = new mapnode<V>*[2*numBuckets];
+    for(int i=0;i<2*numBuckets;i++)
+    {
+        buckets[i]=NULL;
+    }
+    int oldBucketCount = numBuckets;
+    numBuckets*=2;
+    count =0;
+    for(int i=0;i<oldBucketCount;i++)
+    {
+        mapnode<V>* head = temp[i];
+        while(head!=NULL)
+        {
+            insert(head->key,head->value);
+            head=head->next;
+        }
+    }
+    for(int i=0i<oldBucketCount;i++)
+    {
+        mapnode<V>* head = temp[i];
+        delete head;
+    }
+    delete [] temp;
+}
 public:
 void insert(string key, V value)
 {
@@ -77,11 +104,22 @@ void insert(string key, V value)
 	node->next = head;
 	buckets[bucketIndex] = node;
 	count++;     //SINCE NEW NODE IS CREATED WE NEED TO UPDATE THE COUNT
+    double loadFactor = (1.0*count)/numBuckets;
+    if(loadFactor>0.7)
+    rehash();
 }
 
 V getvalue(string key)
 {
-
+int bucketIndex = getBucketIndex(key);
+mapnode<V> *head = buckets[bucketIndex];
+while(head!=NULL)
+{
+    if(head->key == key)
+    return head->value;
+    head=head->next;
+}
+return 0;
 }
 
 
@@ -95,22 +133,25 @@ while(head!=NULL)
 	if(head->key==key){
 		if(prev==NULL)
 		{
-                buckets[bucketsIndex] = head->next;
-		V x = head->value;
-		head->next = NULL;
-		delete head;
-		count--;
-		return x;
+        buckets[bucketsIndex] = head->next;
+		
 		}
 		else{
 		prev->next = head->next;
 		}
+        V x = head->value;
+		head->next = NULL;
+		delete head;
+		count--;
+		return x;
 	}
 	prev = head;
 	head=head->next;
 }
+return 0;
 }
 
 
 
 }
+
