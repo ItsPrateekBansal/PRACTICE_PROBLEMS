@@ -9,7 +9,7 @@ class Edge{
     int destination;
     int weight;
 };
-bool myEdge(const Edge a, const Edge b)
+bool myEdge(const Edge a, const Edge b)   //COMPARATOR
 {
     return a.weight < b.weight;
 }
